@@ -5,7 +5,8 @@ CFG = {
     'debug': False,
     'secret_key': '12345678',
     'users': {
-        'admin': {'password': 'admin'}
+        'admin': {'password': 'admin'},
+        'admin1' : {'password' : '1'}
     },
     'mqtt': {
         'host': os.getenv('MQTT_BROKER_HOST', 'localhost'),

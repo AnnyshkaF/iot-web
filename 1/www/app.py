@@ -6,7 +6,7 @@ from flask import redirect
 from flask import url_for
 from random import uniform
 from config import CFG
-#from alc_config import ALC_CFG
+from alc_config import ALC_CFG
 import paho.mqtt.publish as publish
 
 app = Flask(__name__, static_folder='static')
@@ -46,7 +46,6 @@ def authPage():
     password = request.values.get('password')
     
     d = {}
-    
     if login != None and password != None:
         if login in CFG['users']:
             if CFG['users'][login]['password'] == password:
@@ -66,6 +65,36 @@ def logoutPage():
         session.pop('login')
         
     return redirect('/auth')
+
+@app.route('/findWorker', methods = ['GET','POST'])
+def findWorker():
+    name = request.values.get('name')
+    surname = request.values.get('surname')
+    id = request.values.get('id')
+
+    print(id)
+    d = {};
+    k = [];
+    users = ALC_CFG['workers']
+    if name != None or surname != None:
+        for u in users:
+            if (u['surname'] == surname or u['name'] == name):
+                k.append(u);
+        d = {'people': k}
+        return render_template('find_worker.html', **d)        
+
+    if id != None:
+        for u in users:
+            print(u['id'] == str(id))
+            if (u['id'] == str(id)):
+                k.append(u);
+        d = {'people': k}
+        return render_template('find_worker.html', **d)  
+
+    #print(d)
+    d = {'people': k}
+    return render_template('find_worker.html', **d)
+
 
 @app.route('/alc_info', methods = ['GET'])
 def aclPage(): 

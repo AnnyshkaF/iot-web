@@ -1,0 +1,49 @@
+{% extends "base_with_menu.html" %}
+
+{% block articles %}
+<div class="work-panel-title">
+  <p>Find by name or surname</p>
+</div>
+<div class="work-panel-data">
+  <form name="formName" method="post">
+      <label for="name">First name:</label>
+      <input type="text" id="name" name="name"><br><br>
+      <label for="surname">Last name:</label>
+      <input type="text" id="surname" name="surname"><br><br>
+      <input type="submit" value="Send form data!">
+    </form>
+  </div>
+
+  <div class="work-panel-title">
+    <p>Find by ID</p>
+  </div>
+  <div class="work-panel-data">
+    <form name="formID" method="post">
+      <label for="ID">ID</label>
+      <input type="text" id="id" name="id"><br><br>
+      <input type="submit" value="Send form data!">
+    </form>
+  </div>
+
+  <article>
+    <div class="work-panel-title">
+        <table style="width: 100%">
+            <tr>
+                <td>ID <hr></td>
+                <td>Name <hr></td>
+                <td>Surname <hr></td>
+                <td>Age <hr></td> 
+            </tr>
+            {% for p in people %}
+            <tr>
+              <td>{{p.id}}</td>
+              <td>{{p.name}}</td>
+              <td>{{p.surname}}</td>
+              <td>{{p.age}}</td>
+            </tr>
+            {% endfor %}
+          </div>
+          </table>
+
+</article>
+{% endblock %}
