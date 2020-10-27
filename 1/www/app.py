@@ -5,6 +5,7 @@ from flask import session
 from flask import redirect
 from flask import url_for
 from random import uniform
+import json
 from config import CFG
 from alc_config import ALC_CFG
 import paho.mqtt.publish as publish
@@ -199,6 +200,53 @@ def apiGetData():
         }
     }
 
+@app.route('/api/loadData')
+def loadData():
+    if 'login' not in session:
+        return {}
+    
+    global stateOfSomething1
+    global stateOfSomething2
+    
+    b = []
+    with open('save.json') as json_file:
+        data = json.load(json_file)
+        for d in data['buttons']:
+            b.append(int(d['state']))
+    json_file.close()       
+    stateOfSomething1 = b[0]        
+    stateOfSomething2 = b[1]
+
+    return {
+        'button1': {
+            'state': stateOfSomething1,
+            'name': 'button1'
+        },
+        'button2': {
+            'state': stateOfSomething2,
+            'name': 'button2'
+        }
+    }
+
+@app.route('/api/saveData')
+def saveData():
+    if 'login' not in session:
+        return {}
+    
+    global stateOfSomething1
+    global stateOfSomething2
+    
+    data = {
+    "buttons": [
+        {"name": "button1", "state": stateOfSomething1},
+        {"name": "button2", "state": stateOfSomething2}
+        ]
+    }
+    with open('save.json', 'w') as outfile:
+        json.dump(data, outfile)
+        outfile.close()  
+    return data
+
 @app.route('/api/changeStateOfSomething1', methods = ['GET'])
 def apiChangeStateOfSomething1():
     if 'login' not in session:
@@ -209,12 +257,6 @@ def apiChangeStateOfSomething1():
     newState = request.args.get('newState')
     if newState in [0, 1, '0', '1']:
         stateOfSomething1 = newState
-        
-#         if newState == '1':
-#             publish.single("L01/light1", "100", hostname=CFG['mqtt']['host'], port=CFG['mqtt']['port'])
-#         else:
-#             publish.single("L01/light1", "0", hostname=CFG['mqtt']['host'], port=CFG['mqtt']['port'])
-        
         return {'result': 1}
     else:
         return {'result': 0}
@@ -280,3 +322,4 @@ if __name__ == '__main__':
     app.secret_key = CFG['secret_key']
     
     app.run(host='0.0.0.0', port = CFG['port'], debug = CFG['debug'])
+

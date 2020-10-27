@@ -20,6 +20,7 @@ button1.onclick = function(){
 			
 			lastStateOfButton1 = newState;
 			updateButtonIndicator(button1, {state: newState, name: "---"});
+			saveData()
 		})
 		.catch(function(err){
 			console.log(err);
@@ -38,6 +39,7 @@ button2.onclick = function(){
 			
 			lastStateOfButton2 = newState;
 			updateButtonIndicator(button2, {state: newState, name: "..."});
+			saveData()
 		})
 		.catch(function(err){
 			console.log(err);
@@ -164,7 +166,33 @@ function animation(){
 	updateProgressValue({value: val, unit: "-", alert: 0, load: val});
 	
 	this.nIteration = this.nIteration - 2;
-	setTimeout(animation, 30);
+	setTimeout(animation, 10);
 }
 
+loadData()
 animation();
+
+function loadData(){
+	fetch("/api/loadData")
+		.then(function(d){
+			return d.json();
+		}).then(function(d){
+			lastStateOfButton1 = parseInt(d['button1']['state']);
+			lastStateOfButton2 = parseInt(d['button2']['state']);
+			console.log('but1 = ' + lastStateOfButton1);
+			console.log('but2 = ' + lastStateOfButton2);
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+}
+
+function saveData(){
+	fetch("/api/saveData")
+		.then(function(d){
+			return d.json();
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+}
