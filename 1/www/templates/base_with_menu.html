@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block header %}
+	<header>
+		<ul class="topmenu">
+			<li><a href="/">Main</a>
+				<ul class="submenu">
+					<li><a href="/controls">L1</a></li>
+					<li><a href="/settings">L2</a></li>
+				</ul>
+		    </li>
+			<li class="menu-delimiter"></li>
+			<li><a href="/controls">Controls</a></li>
+			<li class="menu-delimiter"></li>
+			<li><a href="/settings">Settings</a></li>
+			<li class="menu-delimiter"></li>
+			<li><a href="/about">About</a></li>
+			<li class="menu-delimiter"></li>
+			<li><a href="/logout">Log out</a></li>
+		</ul>
+	</header>
+{% endblock %}
+		
+{% block footer %}
+	<footer>
+		<p>&copy All rights reserved 2019</p>
+	</footer>
+{% endblock %}

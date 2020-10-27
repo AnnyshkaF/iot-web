@@ -1,0 +1,26 @@
+{% extends "base_with_menu.html" %}
+
+{% block links %}
+ <script src="static/controls.js"></script> 
+{% endblock %}
+
+
+{% block articles %}
+
+<article>
+	{% for ctrl in controls %}
+		<div class="work-panel">
+			<div class="work-panel-title">
+				<p>{{ ctrl.name }}</p>
+			</div>
+			
+			<div class="work-panel-data">
+				{% for action in ctrl.actions %}
+					<input class="work-panel-button" id="a{{ action.globalActionId }}" type="button" value="{{ action.name }}" onclick="activateAction({{ action.globalActionId }})"/>
+				{% endfor %}
+			</div>
+		</div>
+	{% endfor %}
+</article>
+
+{% endblock %}
