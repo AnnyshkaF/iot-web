@@ -1,0 +1,102 @@
+{% extends "base_with_menu.html" %}
+
+{% block links %}
+ <script src="static/alc_info.js"></script> 
+{% endblock %}
+
+{% block articles %}
+<div class="acl-form-container">
+	<form class="alc_input" method="get">
+		<select name="weight" >
+			<option value ="60">60 кг</option>
+			<option value ="70"> 70 кг</option>
+			<option value ="80"> 80 кг</option>
+			<option value ="90"> 90 кг</option>
+			<option value ="100">100 кг</option>
+		</select>
+
+		<select name="volume">
+			<option value ="100">100 мл</option>
+			<option value ="200">200 мл</option>
+			<option value ="300">300 мл</option>
+		</select>
+		
+		<input type = "button" onclick = "setWatch()" value = "Try">  
+
+		<!-- <p><input class="alc-form-input button" onclick = "setInterval()" type="submit" id="alc_button" value="Alc_input"/></p> -->
+		
+	</form>
+</div>
+<input id="alc_button" type = "button" value = "Try2">  
+
+<div> Weight: {{weight}} (kg) </div>
+<div> Volume: {{volume}} (ml) </div>
+
+<div class="alc-panel-data">
+	<!-- Beer 4% -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  				
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="beer4_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="beer4_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="beer4" x="20" y="43" text-anchor="middle" font-size="6">Beer 4%</text>
+	</svg>
+	
+	<!-- Beer 6% -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="beer6_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="beer6_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="beer6" x="20" y="43" text-anchor="middle" font-size="6">Beer 6%</text>
+	</svg>
+	
+	<!-- Gin -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="gin_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="gin_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="gin" x="20" y="43" text-anchor="middle" font-size="6">Gin</text>
+	</svg>
+	
+	<!-- Champagne -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="champagne_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="champagne_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="champagne" x="20" y="43" text-anchor="middle" font-size="6">Champagne</text>
+	</svg>
+	</div>
+
+	<div class="alc-panel-data">
+	<!-- Nast -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="nast_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="nast_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="nast" x="20" y="43" text-anchor="middle" font-size="6">Nast</text>
+	</svg>
+	
+	<!-- Liquor -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="liquor_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="liquor_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="liquor" x="20" y="43" text-anchor="middle" font-size="6">Liquor</text>
+	</svg>
+	
+	<!-- Vodka -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="vodka_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="vodka_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="vodka" x="20" y="43" text-anchor="middle" font-size="6">Vodka</text>
+	</svg>
+	
+	<!-- Сognac -->
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width ="100%" >  
+		<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+		<line id="cognac_hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+	   <line id="cognac_minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+	   <text id="cognac" x="20" y="43" text-anchor="middle" font-size="6">Cognac</text>
+	</svg>
+</div>
+{% endblock %}

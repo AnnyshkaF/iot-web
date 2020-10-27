@@ -203,3 +203,9 @@ footer{
     stroke-width: 2px;
 	fill: #C2E362;
 }
+
+.alc-panel-data{
+	display: flex;
+	margin: 0.5rem;
+	padding: 0.5rem;
+}
