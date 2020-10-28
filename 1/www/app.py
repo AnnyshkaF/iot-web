@@ -67,23 +67,17 @@ def logoutPage():
         
     return redirect('/auth')
 
+#8,9
 @app.route('/findWorker', methods = ['GET','POST'])
 def findWorker():
     name = request.values.get('name')
     surname = request.values.get('surname')
     id = request.values.get('id')
 
-    print(id)
-    d = {};
-    k = [];
+    # POST is proccessed at first in 
+    # asumption that GET may be still in request
+    d = {}; k = [];
     users = ALC_CFG['workers']
-    if name != None or surname != None:
-        for u in users:
-            if (u['surname'] == surname or u['name'] == name):
-                k.append(u);
-        d = {'people': k}
-        return render_template('find_worker.html', **d)        
-
     if id != None:
         for u in users:
             print(u['id'] == str(id))
@@ -92,12 +86,47 @@ def findWorker():
         d = {'people': k}
         return render_template('find_worker.html', **d)  
 
+    if name != None or surname != None:
+        for u in users:
+            if (u['surname'] == surname or u['name'] == name):
+                k.append(u);
+        d = {'people': k}
+        return render_template('find_worker.html', **d)        
+
     #print(d)
     d = {'people': k}
     return render_template('find_worker.html', **d)
 
+@app.route('/api/addWorker', methods = ['GET','POST'])
+def addWorker():
+    name = request.values.get('name')
+    surname = request.values.get('surname')
+    age = request.values.get('age')
 
-@app.route('/alc_info', methods = ['GET'])
+    # POST is proccessed at first in 
+    # asumption that GET may be still in request
+    d = {}; k = [];
+    users = ALC_CFG['workers']
+    if id != None:
+        for u in users:
+            print(u['id'] == str(id))
+            if (u['id'] == str(id)):
+                k.append(u);
+        d = {'people': k}
+        return render_template('find_worker.html', **d)  
+
+    if name != None or surname != None:
+        for u in users:
+            if (u['surname'] == surname or u['name'] == name):
+                k.append(u);
+        d = {'people': k}
+        return render_template('find_worker.html', **d)        
+
+    #print(d)
+    d = {'people': k}
+    return render_template('find_worker.html', **d)
+
+@app.route('/alc_info', methods = ['GET', 'POST'])
 def aclPage(): 
     weight = request.values.get('weight')
     print(weight)
@@ -129,7 +158,7 @@ def aboutPage():
         return redirect('/auth')
     
     return render_template('about.html')
-
+#10
 #Data is generated here
 @app.route('/api/getData')
 def apiGetData():
@@ -192,11 +221,11 @@ def apiGetData():
         },
         'stateOfSomething1': {
             'state': stateOfSomething1,
-            'name': 'light1'
+            'name': 'button1'
         },
         'stateOfSomething2': {
             'state': stateOfSomething2,
-            'name': 'light2'
+            'name': 'button2'
         }
     }
 
@@ -247,6 +276,46 @@ def saveData():
         outfile.close()  
     return data
 
+@app.route('/api/saveWorkers', methods = ['POST'])
+def saveWorker():
+    if 'login' not in session:
+        return {}
+    
+    name = request.args.get('name')
+    surname = request.args.get('surname')
+    age = request.args.get('age')
+    b = []
+
+    #read workers base
+    json_file = open('worker.json','r+')
+    data = json.load(json_file)
+    new_id = len(data['workers'])
+    new_worker = {'id' : new_id, 'name': name, 'surname' : surname, 'age' : age}
+    for d in data['workers']:
+        b.append(d)
+        if(d == new_worker):
+            json_file.close()  
+            return {'message' : 'Worker already exists'}
+                
+    b.append(new_worker)
+    b = {"workers" : [b]}
+    #write workers base to json_file
+    json.dump(b, json_file)
+    json_file.close()  
+    return {'message' : 'Worker is added'}
+
+
+    return {
+        'button1': {
+            'state': stateOfSomething1,
+            'name': 'button1'
+        },
+        'button2': {
+            'state': stateOfSomething2,
+            'name': 'button2'
+        }
+    }
+
 @app.route('/api/changeStateOfSomething1', methods = ['GET'])
 def apiChangeStateOfSomething1():
     if 'login' not in session:
@@ -255,6 +324,7 @@ def apiChangeStateOfSomething1():
     global stateOfSomething1
     
     newState = request.args.get('newState')
+    print(newState)
     if newState in [0, 1, '0', '1']:
         stateOfSomething1 = newState
         return {'result': 1}
@@ -269,6 +339,7 @@ def apiChangeStateOfSomething2():
     global stateOfSomething2
     
     newState = request.args.get('newState')
+    print(newState)
     if newState in [0, 1, '0', '1']:
         stateOfSomething2 = newState
         return {'result': 1}

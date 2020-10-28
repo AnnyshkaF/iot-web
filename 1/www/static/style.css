@@ -15,7 +15,7 @@ html *{
 header{
 	padding: 0.5rem;
 	margin-bottom: 1rem;
-	background-color: #180588;
+	background-color: #123399;
 }
 
 header ul{
@@ -32,9 +32,17 @@ header ul li a{
 	display: inline-block;
 	text-decoration: none;
 	color: #fff;
+	width: 100%;
+}
+
+header ul li ul li{
+	background-color: #328390;
+	min-width: 160px;
+	padding: 5px 5px;
 }
 
 .topmenu > li {
+	display: inline-block;
 	position: relative;
 }
   
@@ -47,6 +55,7 @@ header ul li a{
 
 .topmenu li:hover .submenu {
 	display: block;
+	width: 100%;
 }
 
 header ul li a:hover{

@@ -35,6 +35,8 @@
 					<ellipse cx="75" cy="20" rx="50%" ry="15" class="top" fill="none"></ellipse>
 				</g> 
 				</svg>
+
+				
 			</div>
 
 			<div class="svg-element">	
@@ -105,6 +107,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 	<div class="work-panel">
 		<div class="work-panel-title">
 			<p>Buttons</p>
@@ -131,8 +135,28 @@
 					</g>
 				</svg>
 			</div>
-		</div>
+			<div class="svg-element">	
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width ="100%" onload="initWatch()"> 
+					<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+					<line id="hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+				<line id="minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+				<text id="watch" x="20" y="43" text-anchor="middle" font-size="6">Time</text>
+				</svg>
+			</div>
+		</div>		
 	</div>
+	<!-- Input button forms -->
+	<div class="button-container">
+		<form class="form" method="post">
+			<p><input id="button-input1" name="tbutton1" type="text"/></p>
+			<p><input id="tbutton_1" type="button" value="Button1"/></p>
+		</form>
+		<form class="form" method="post">
+			<p><input id="button-input2" name="tbutton2" type="text"/></p>
+			<p><input id="tbutton_2" type="button" value="Button2"/></p>
+		</form>
+	</div>
+
 </article>
 
 {% endblock %}

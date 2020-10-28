@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block articles %}
+
+<input type="range" id = "ranger">
+<span id="rangeValue">50</span>
 <div class="acl-form-container">
-	<form class="alc_input" method="get">
+	<form class="alc_input" method="post">
 		<select name="weight" >
 			<option value ="60">60 кг</option>
 			<option value ="70"> 70 кг</option>
@@ -21,13 +24,14 @@
 			<option value ="300">300 мл</option>
 		</select>
 		
-		<input type = "button" onclick = "setWatch()" value = "Try">  
+		<input id="alc_button1" type = "submit" value = "Send"> 
 
 		<!-- <p><input class="alc-form-input button" onclick = "setInterval()" type="submit" id="alc_button" value="Alc_input"/></p> -->
 		
 	</form>
 </div>
-<input id="alc_button" type = "button" value = "Try2">  
+
+<input id="alc_button" type = "button" value = "TryNoUpdate"> 
 
 <div> Weight: {{weight}} (kg) </div>
 <div> Volume: {{volume}} (ml) </div>

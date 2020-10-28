@@ -1,9 +1,13 @@
+var val = document.getElementById('ranger');
 var button1 = document.getElementById("button_1");
 var button2 = document.getElementById("alc_button");
 
 svgHours   = document.querySelector("#beer4_hours"),
 svgMinutes = document.querySelector("#beer4_minutes"),
 	   
+val.onclick = function(){
+	document.getElementById('rangeValue').innerHTML = document.getElementById('ranger').value;
+}
 
 //function setWatch(){
 button2.onclick = function(){

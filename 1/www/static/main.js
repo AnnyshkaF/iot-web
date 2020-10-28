@@ -5,6 +5,12 @@ var button1 = document.getElementById("button_1");
 var button2 = document.getElementById("button_2");
 var lineContent = document.getElementById('bar-content');
 var cylinderContent = document.getElementById('cylinder-content');
+svgHours   = document.querySelector("#hours");
+svgMinutes = document.querySelector("#minutes");
+
+//text input
+var tbutton1 = document.getElementById("tbutton_1");
+var tbutton2 = document.getElementById("tbutton_2");
 
 var lastStateOfButton1 = 0, lastStateOfButton2 = 0;
 
@@ -27,6 +33,7 @@ button1.onclick = function(){
 		});
 }
 
+//пункт 8 (добавить POST)
 button2.onclick = function(){
 	var newState = lastStateOfButton2 == 1 ? 0 : 1;
 	fetch("/api/changeStateOfSomething2?newState=" + (lastStateOfButton2 == 1 ? 0 : 1))
@@ -46,6 +53,65 @@ button2.onclick = function(){
 		});
 }
 
+tbutton1.onclick = function(){
+	var newState = document.getElementById("button-input1").value;
+	fetch("/api/changeStateOfSomething1?newState=" + newState)
+		.then(function(d){
+			return d.json();
+		})
+		.then(function(d){
+			if(d.result != 1)
+				throw new Exception("Unsuccessful result");
+			
+			lastStateOfButton1 = newState;
+			updateButtonIndicator(button1, {state: newState, name: "---"});
+			saveData()
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		document.getElementById("button-input1").value=""
+}
+
+tbutton2.onclick = function(){
+	var newState = document.getElementById("button-input2").value;
+	fetch("/api/changeStateOfSomething2?newState=" + newState)
+		.then(function(d){
+			return d.json();
+		})
+		.then(function(d){
+			if(d.result != 1)
+				throw new Exception("Unsuccessful result");
+			
+			lastStateOfButton2 = newState;
+			updateButtonIndicator(button2, {state: newState, name: "..."});
+			saveData()
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+		document.getElementById("button-input2").value=""
+}
+
+
+//function setWatch(){
+function initWatch(){
+	let  dt = new Date(),
+		hours = dt.getHours(),
+		minutes = dt.getMinutes(),
+		seconds = dt.getSeconds(),
+		degSeconds = 180 + 360/60 * seconds,
+		degMinutes = 180 + 360/60 * minutes,
+		degHours =   180 + 360/12 * ( hours % 12 ) + degMinutes/60;
+		
+	
+		svgHours.setAttribute('transform',`translate(18,18) rotate(${degHours} 0 0)`);
+		svgMinutes.setAttribute('transform',`translate(18,18) rotate(${degMinutes} 0 0)`);
+		console.clear();
+		console.log(dt.toLocaleTimeString());
+		console.log(hours);
+		console.log(seconds);
+}
 
 //Update the cylinder progress bar
 function updateProgressCylinder (value){
@@ -124,8 +190,16 @@ function loop(){
 			//here we have all our data
 			//console.log('hello');
 			updateProgressValue(d.alcohol);
-		    updateLoadIndicator(temp, d.temperature);
-			updateLoadIndicator(light, d.light);
+			if(lastStateOfButton1 == 1){
+				updateLoadIndicator(temp, d.temperature);
+			}else{
+				updateLoadIndicator(temp, {value: "-", unit: "-", alert: 0, load: 0});
+			}
+			if(lastStateOfButton2 == 1){
+				updateLoadIndicator(light, d.light);
+			}else{
+				updateLoadIndicator(light, {value: "-", unit: "-", alert: 0, load: 0});
+			}
 			updateLoadIndicator(humidity, d.humidity);
 			updateButtonIndicator(button1, d.stateOfSomething1);
 			updateButtonIndicator(button2, d.stateOfSomething2);
