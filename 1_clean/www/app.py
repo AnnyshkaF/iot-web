@@ -22,13 +22,6 @@ def mainPage():
     
     return render_template('main.html')
 
-@app.route('/controls')
-def controlsPage():
-    if 'login' not in session:
-        return redirect('/auth')
-    
-    d = {'controls': CFG['controls']}
-    return render_template('controls.html', **d)
 
 @app.route('/auth', methods = ['GET', 'POST'])
 def authPage():
@@ -86,6 +79,24 @@ def findWorker():
     d = {'people': k}
     return render_template('find_worker.html', **d)
 
+@app.route('/alc_info', methods = ['GET', 'POST'])
+def aclPage(): 
+    weight = request.values.get('weight')
+    print(weight)
+    volume = request.values.get('volume')
+
+    #names = ALC_CFG['name'];
+    names = ['pivo4', 'pivo6', 'vodka']
+    for n in names:
+        hour = 2#(names[weight][volume]['hour']);
+        min = 30 #(names[weight][volume]['min']);
+
+    if(weight == None or volume == None):
+        d = {'weight': 70, 'volume' : 100};
+    else:
+        d = {'weight': weight, 'volume' : volume, 'hour' : hour, 'min': min}
+
+    return render_template('alc_info.html', **d)
 
 @app.route('/about')
 def aboutPage():

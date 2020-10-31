@@ -34,6 +34,7 @@ button1.onclick = function(){
 }
 
 //Пункт 8
+//GET
 /*button2.onclick = function(){
 	var newState = lastStateOfButton2 == 1 ? 0 : 1;
 	fetch("/api/changeStateOfSomething2?newState=" + (lastStateOfButton2 == 1 ? 0 : 1))
@@ -53,7 +54,7 @@ button1.onclick = function(){
 		});
 }*/
 
-//POST
+//POST request
 button2.onclick = function(){
 	console.log('in func');
 	var newState = lastStateOfButton2 == 1 ? 0 : 1;
@@ -120,8 +121,6 @@ tbutton2.onclick = function(){
 		document.getElementById("button-input2").value=""
 }
 
-
-//function setWatch(){
 function initWatch(){
 	let  dt = new Date(),
 		hours = dt.getHours(),
@@ -231,7 +230,6 @@ function loop(){
 			lastStateOfButton1 = d.stateOfSomething1.state;
 			lastStateOfButton2 = d.stateOfSomething2.state;
 			
-			//
 			setTimeout(loop, 1000);
 		})
 		.catch(function(err){
