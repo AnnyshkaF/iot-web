@@ -1,0 +1,162 @@
+{% extends "base_with_menu.html" %}
+
+{% block links %}
+ <script src="static/main.js"></script> 
+{% endblock %}
+
+
+{% block articles %}
+<article>
+
+	<div class="work-panel">
+		<div class="work-panel-title">
+			<p>Sensors</p>
+		</div>
+
+		<div class="work-panel-data">
+			<div class="svg-element">
+				<h2>Cylinder progress bar</h2>
+				<svg id="cylinder-progress" viewBox="0 0 150 350" width="100%" xmlns="http://www.w3.org/2000/svg">
+				<!--<svg id="cylinder-progress" width="150px" height="250px"> --> 
+				<g id="cylinder-container"> 
+					<!-- walls -->
+					<rect x="0" y="20" width="100%" height="80"></rect>
+					<ellipse cx="75" cy="20" rx="50%" ry="15" class="top"></ellipse>
+					<ellipse cx="75" cy="100" rx="50%" ry="15" class="bottom"></ellipse>
+				</g>
+				<g id="cylinder-content">
+					<rect id = "rect" x="0" y="90" width="100%" height="10" ></rect>
+					<ellipse id = "el_top" cx="75" cy="20" rx="50%" ry="15"></ellipse>
+					<ellipse id = "el_bottom"cx="75" cy="100" rx="50%" ry="15"></ellipse>
+					<text id="percentage_cyl" x="40%" y="80" style="fill: #000000">10%</text>
+				</g>
+				<!-- moving cover -->
+				<g id="cylinder-container">
+					<ellipse cx="75" cy="20" rx="50%" ry="15" class="top" fill="none"></ellipse>
+				</g> 
+				</svg>
+
+				
+			</div>
+
+			<div class="svg-element">	
+				<h2>Line progress bar</h2>
+				<svg  viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+				<!-- <svg  height="100" width="100">  -->
+				<g id="bar-container">
+					<line 
+						x1="0"
+						y1="50%"
+						x2="100%"
+						y2="50%"
+						stroke="#FFFFFF" 
+						stroke-width="30" />
+				</g>
+				<g id="bar-content">
+					<line id="line"
+						x1="0"
+						y1="50%"
+						x2="100%"
+						y2="50%"
+						stroke="#C2E362" 
+						fill="transparent" 
+						stroke-dasharray="100%" 
+						stroke-dashoffset="50%" 
+						stroke-width="28" />
+						<text id="percentage_bar" x="30%" y="55%">50%</text>
+				</g>  
+				</svg>   
+			</div>
+		</div>
+		<div class="work-panel-data">
+			<div class="svg-element">	
+				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+					<g id="temperature_indicator">
+						<!-- <rect x="0" y="0" width="40" height="10" fill="#eee"/> -->
+						<circle cx="0" cy="0" r="50" fill="#ddd"/>
+						<path id="load" d="" fill="#3b89ff"/>
+						<circle cx="0" cy="0" r="40" fill="#eee"/>
+						<text id="value" x="0" y="8" text-anchor="middle" font-size="24">-</text>
+						<text id="unit" x="0" y="25" text-anchor="middle" font-size="10" style="fill:white">-</text>
+					</g>
+				</svg>
+			</div>
+			
+			<div class="svg-element">	
+				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+					<g id="light_indicator">
+						<circle cx="0" cy="0" r="50" fill="#ddd"/>
+						<path id="load" d="" fill="#3b89ff"/>
+						<circle cx="0" cy="0" r="40" fill="#eee"/>
+						<text id="value" x="0" y="8" text-anchor="middle" font-size="24">-</text>
+						<text id="unit" x="0" y="25" text-anchor="middle" font-size="10">-</text>
+					</g>
+				</svg>
+			</div>
+			
+			<div class="svg-element">	
+				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+					<g id="humidity_indicator">
+						<circle cx="0" cy="0" r="50" fill="#ddd"/>
+						<path id="load" d="" fill="#3b89ff"/>
+						<circle cx="0" cy="0" r="40" fill="#eee"/>
+						<text id="value" x="0" y="8" text-anchor="middle" font-size="24">-</text>
+						<text id="unit" x="0" y="25" text-anchor="middle" font-size="10">-</text>
+					</g>
+				</svg>
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="work-panel">
+		<div class="work-panel-title">
+			<p>Buttons</p>
+		</div>
+		
+		<div class="work-panel-data">
+			<div class="svg-element">	
+				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+					<g id="button_1">
+						<circle id="backlight" cx="0" cy="0" r="50" fill="#ddd"/>
+						<circle cx="0" cy="0" r="40" fill="#eee"/>
+						<text id="state" x="0" y="8" text-anchor="middle" font-size="24">-</text>
+						<text id="name" x="0" y="25" text-anchor="middle" font-size="10">-</text>
+					</g>
+				</svg>
+			</div>
+			<div class="svg-element">	
+				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+					<g id="button_2">
+						<circle id="backlight" cx="0" cy="0" r="50" fill="#ddd"/>
+						<circle cx="0" cy="0" r="40" fill="#eee"/>
+						<text id="state" x="0" y="8" text-anchor="middle" font-size="24">-</text>
+						<text id="name" x="0" y="25" text-anchor="middle" font-size="10">-</text>
+					</g>
+				</svg>
+			</div>
+			<div class="svg-element">	
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width ="100%" onload="initWatch()"> 
+					<circle fill="#99AAB5" cx="18" cy="18" r="18"/><circle fill="#E1E8ED" cx="18" cy="18" r="14"/>
+					<line id="hours" x1="0" y1="0" x2="0" y2="8" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(180 0 0) " />
+				<line id="minutes" x1="0" y1="0" x2="0" y2="12" stroke-linecap="round"    stroke-width="2" stroke="#66757F" transform="translate(18,18) rotate(258 0 0) " />
+				<text id="watch" x="20" y="43" text-anchor="middle" font-size="6">Time</text>
+				</svg>
+			</div>
+		</div>		
+	</div>
+	<!-- Input button forms -->
+	<div class="button-container">
+		<form class="form" method="post">
+			<p><input id="button-input1" name="tbutton1" type="text"/></p>
+			<p><input id="tbutton_1" type="button" value="Button1"/></p>
+		</form>
+		<form class="form" method="post">
+			<p><input id="button-input2" name="tbutton2" type="text"/></p>
+			<p><input id="tbutton_2" type="button" value="Button2"/></p>
+		</form>
+	</div>
+
+</article>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base_with_menu.html" %}
+
+{% block articles %}
+ <form name="formGer" method="get">
+    <label for="name">First name:</label>
+    <input type="text" id="name" name="name"><br><br>
+    <label for="surname">Last name:</label>
+    <input type="text" id="surname" name="surname"><br><br>
+    <input type="submit" value="Send form data!">
+  </form>
+
+  <form name="formPost" method="post">
+    <label for="ID">ID</label>
+    <input type="text" id="id" name="id"><br><br>
+    <input type="submit" value="Send form data!">
+  </form>
+
+  <article>
+		<div class="work-panel">
+			<div class="work-panel-title">
+                <table>
+                    <tr>
+                        <td>ID</td>
+                        <td>Name</td>
+                        <td>Surname</td>
+                        <td>Age</td>
+                    </tr>
+                    {% for p in people %}
+                    <tr>
+                      <td>{{p.id}}</td>
+                      <td>{{p.name}}</td>
+                      <td>{{p.surname}}</td>
+                      <td>{{p.age}}</td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+		</div>
+</article>
+{% endblock %}
