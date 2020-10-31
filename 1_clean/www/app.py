@@ -12,7 +12,7 @@ import paho.mqtt.publish as publish
 
 app = Flask(__name__, static_folder='static')
 
-stateOfSomething1 = 0   #ANNA: initial state of the buttons
+stateOfSomething1 = 0 
 stateOfSomething2 = 0
 
 @app.route('/')
@@ -21,14 +21,6 @@ def mainPage():
         return redirect('/auth')
     
     return render_template('main.html')
-    #return '123' #{'n':10,'a':[1,2,3]} #json
-    #return """ <html> 
-    # <head>
-    # Test {}
-    #<a href = "/test"> to test</a>
-    # </head>
-    # </html>
-    # """.format{val}
 
 @app.route('/controls')
 def controlsPage():
@@ -74,8 +66,6 @@ def findWorker():
     surname = request.values.get('surname')
     id = request.values.get('id')
 
-    # POST is proccessed at first in 
-    # asumption that GET may be still in request
     d = {}; k = [];
     users = ALC_CFG['workers']
     if id != None:
@@ -93,64 +83,9 @@ def findWorker():
         d = {'people': k}
         return render_template('find_worker.html', **d)        
 
-    #print(d)
     d = {'people': k}
     return render_template('find_worker.html', **d)
 
-@app.route('/api/addWorker', methods = ['GET','POST'])
-def addWorker():
-    name = request.values.get('name')
-    surname = request.values.get('surname')
-    age = request.values.get('age')
-
-    # POST is proccessed at first in 
-    # asumption that GET may be still in request
-    d = {}; k = [];
-    users = ALC_CFG['workers']
-    if id != None:
-        for u in users:
-            print(u['id'] == str(id))
-            if (u['id'] == str(id)):
-                k.append(u);
-        d = {'people': k}
-        return render_template('find_worker.html', **d)  
-
-    if name != None or surname != None:
-        for u in users:
-            if (u['surname'] == surname or u['name'] == name):
-                k.append(u);
-        d = {'people': k}
-        return render_template('find_worker.html', **d)        
-
-    #print(d)
-    d = {'people': k}
-    return render_template('find_worker.html', **d)
-
-@app.route('/alc_info', methods = ['GET', 'POST'])
-def aclPage(): 
-    weight = request.values.get('weight')
-    print(weight)
-    volume = request.values.get('volume')
-
-    #names = ALC_CFG['name'];
-    names = ['pivo4', 'pivo6', 'vodka']
-    for n in names:
-        hour = 2#(names[weight][volume]['hour']);
-        min = 30 #(names[weight][volume]['min']);
-
-    if(weight == None or volume == None):
-        d = {'weight': 70, 'volume' : 100};
-    else:
-        d = {'weight': weight, 'volume' : volume, 'hour' : hour, 'min': min}
-
-    return render_template('alc_info.html', **d)
-
-@app.route('/settings')
-def settingsPage():
-    if 'login' not in session:
-        return redirect('/auth')
-    
-    return render_template('settings.html')
 
 @app.route('/about')
 def aboutPage():
@@ -158,8 +93,8 @@ def aboutPage():
         return redirect('/auth')
     
     return render_template('about.html')
+
 #10
-#Data is generated here
 @app.route('/api/getData')
 def apiGetData():
     if 'login' not in session:
@@ -174,24 +109,17 @@ def apiGetData():
     alcLoad = (alc - alcMin) / (alcMax - alcMin) * 100.0
     alcAlert = alc > 95
 
-    tempMin = -20.0
-    tempMax = 35.0
+    tempMin = 0.0
+    tempMax = 45.0
     temp = uniform(tempMin, tempMax);
     tempLoad = (temp - tempMin) / (tempMax - tempMin) * 100.0;
-    tempAlert = temp > 27.0
+    tempAlert = temp > 37.5
     
-    lightMin = 0.0
-    lightMax = 400.0
-    light = uniform(lightMin, lightMax)
-    lightLoad = (light - lightMin) / (lightMax - lightMin) * 100.0
-    lightAlert = light > 300.0
-    
-    humidityMin = 0.0
-    humidityMax = 100.0
-    humidity = uniform(humidityMin, humidityMax)
-    humidityLoad = (humidity - humidityMin) / (humidityMax - humidityMin) * 100.0
-    humidityAlert = humidity > 95
-
+    pulseMin = 0.0
+    pulseMax = 150.0
+    pulse = uniform(pulseMin, pulseMax)
+    pulseLoad = (pulse - pulseMin) / (pulseMax - pulseMin) * 100.0
+    pulseAlert = pulse > 100.0
 
     
     return {
@@ -207,25 +135,19 @@ def apiGetData():
             'alert': tempAlert,
             'unit': '\u2103'
         },
-        'light': {
-            'value': '{:.1f}'.format(light),
-            'load': lightLoad,
-            'alert': lightAlert,
-            'unit': 'lux'
-        },
-        'humidity': {
-            'value': '{:.1f}'.format(humidity),
-            'load': humidityLoad,
-            'alert': humidityAlert,
-            'unit': 'hum'
+        'pulse': {
+            'value': '{:.1f}'.format(pulse),
+            'load': pulseLoad,
+            'alert': pulseAlert,
+            'unit': 'Pulse'
         },
         'stateOfSomething1': {
             'state': stateOfSomething1,
-            'name': 'button1'
+            'name': '\u2103 sensor'
         },
         'stateOfSomething2': {
             'state': stateOfSomething2,
-            'name': 'button2'
+            'name': 'Pulse sensor'
         }
     }
 
@@ -286,7 +208,6 @@ def saveWorker():
     age = request.args.get('age')
     b = []
 
-    #read workers base
     json_file = open('worker.json','r+')
     data = json.load(json_file)
     new_id = len(data['workers'])
@@ -299,7 +220,7 @@ def saveWorker():
                 
     b.append(new_worker)
     b = {"workers" : [b]}
-    #write workers base to json_file
+  
     json.dump(b, json_file)
     json_file.close()  
     return {'message' : 'Worker is added'}
@@ -331,15 +252,19 @@ def apiChangeStateOfSomething1():
     else:
         return {'result': 0}
 
-@app.route('/api/changeStateOfSomething2', methods = ['GET'])
+@app.route('/api/changeStateOfSomething2', methods = ['GET', 'POST'])
 def apiChangeStateOfSomething2():
     if 'login' not in session:
         return {}
     
     global stateOfSomething2
+
+    if request.method == 'POST':
+        req = request.get_json()
+        newState = req['newState']
+    else:
+        newState = request.args.get('newState')
     
-    newState = request.args.get('newState')
-    print(newState)
     if newState in [0, 1, '0', '1']:
         stateOfSomething2 = newState
         return {'result': 1}

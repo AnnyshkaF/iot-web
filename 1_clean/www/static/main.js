@@ -33,11 +33,38 @@ button1.onclick = function(){
 		});
 }
 
-//пункт 8 (добавить POST)
-button2.onclick = function(){
+//Пункт 8
+/*button2.onclick = function(){
 	var newState = lastStateOfButton2 == 1 ? 0 : 1;
 	fetch("/api/changeStateOfSomething2?newState=" + (lastStateOfButton2 == 1 ? 0 : 1))
 		.then(function(d){
+			return d.json();
+		})
+		.then(function(d){
+			if(d.result != 1)
+				throw new Exception("Unsuccessful result");
+			
+			lastStateOfButton2 = newState;
+			updateButtonIndicator(button2, {state: newState, name: "..."});
+			saveData()
+		})
+		.catch(function(err){
+			console.log(err);
+		});
+}*/
+
+//POST
+button2.onclick = function(){
+	console.log('in func');
+	var newState = lastStateOfButton2 == 1 ? 0 : 1;
+
+	fetch("/api/changeStateOfSomething2",{
+	method: "POST",
+	body: JSON.stringify({ "newState": newState}),
+	headers: new Headers({
+        "content-type": "application/json"
+      })
+	}).then(function(d){
 			return d.json();
 		})
 		.then(function(d){
@@ -182,13 +209,11 @@ function updateButtonIndicator(element, data){
 }
 
 function loop(){
-	fetch("/api/getData") //ANNA: calls function from app.py
+	fetch("/api/getData")
 		.then(function(d){
 			return d.json();
 		})
 		.then(function(d){
-			//here we have all our data
-			//console.log('hello');
 			updateProgressValue(d.alcohol);
 			if(lastStateOfButton1 == 1){
 				updateLoadIndicator(temp, d.temperature);
@@ -196,11 +221,10 @@ function loop(){
 				updateLoadIndicator(temp, {value: "-", unit: "-", alert: 0, load: 0});
 			}
 			if(lastStateOfButton2 == 1){
-				updateLoadIndicator(light, d.light);
+				updateLoadIndicator(light, d.pulse);
 			}else{
 				updateLoadIndicator(light, {value: "-", unit: "-", alert: 0, load: 0});
 			}
-			updateLoadIndicator(humidity, d.humidity);
 			updateButtonIndicator(button1, d.stateOfSomething1);
 			updateButtonIndicator(button2, d.stateOfSomething2);
 			
@@ -221,7 +245,6 @@ function animation(){
 		this.nIteration = 200;
 	
 	if(this.nIteration == 0){
-		//console.log('ddd');
 		loop();
 		return;
 	}
@@ -230,12 +253,10 @@ function animation(){
 		var val = 100 - (this.nIteration - 100);
 		updateLoadIndicator(temp, {value: "-", unit: "-", alert: 0, load: val});
 		updateLoadIndicator(light, {value: "-", unit: "-", alert: 0, load: val});
-		updateLoadIndicator(humidity, {value: "-", unit: "-", alert: 0, load: val});
 	}else{
 		var val = this.nIteration;
 		updateLoadIndicator(temp, {value: "-", unit: "-", alert: 0, load: val});
 		updateLoadIndicator(light, {value: "-", unit: "-", alert: 0, load: val});
-		updateLoadIndicator(humidity, {value: "-", unit: "-", alert: 0, load: val});
 	}
 	updateProgressValue({value: val, unit: "-", alert: 0, load: val});
 	

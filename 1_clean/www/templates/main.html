@@ -15,7 +15,7 @@
 
 		<div class="work-panel-data">
 			<div class="svg-element">
-				<h2>Cylinder progress bar</h2>
+				<h2>How much did he drink? (different representations)</h2>
 				<svg id="cylinder-progress" viewBox="0 0 150 350" width="100%" xmlns="http://www.w3.org/2000/svg">
 				<!--<svg id="cylinder-progress" width="150px" height="250px"> --> 
 				<g id="cylinder-container"> 
@@ -40,7 +40,7 @@
 			</div>
 
 			<div class="svg-element">	
-				<h2>Line progress bar</h2>
+				<h2>Both display the same for now - gas sensor</h2>
 				<svg  viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
 				<!-- <svg  height="100" width="100">  -->
 				<g id="bar-container">
@@ -70,6 +70,7 @@
 		</div>
 		<div class="work-panel-data">
 			<div class="svg-element">	
+				<h2>Temperature sensor</h2>
 				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
 					<g id="temperature_indicator">
 						<!-- <rect x="0" y="0" width="40" height="10" fill="#eee"/> -->
@@ -83,20 +84,9 @@
 			</div>
 			
 			<div class="svg-element">	
+				<h2>Pulse sensor</h2>
 				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
 					<g id="light_indicator">
-						<circle cx="0" cy="0" r="50" fill="#ddd"/>
-						<path id="load" d="" fill="#3b89ff"/>
-						<circle cx="0" cy="0" r="40" fill="#eee"/>
-						<text id="value" x="0" y="8" text-anchor="middle" font-size="24">-</text>
-						<text id="unit" x="0" y="25" text-anchor="middle" font-size="10">-</text>
-					</g>
-				</svg>
-			</div>
-			
-			<div class="svg-element">	
-				<svg viewBox="-50 -50 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
-					<g id="humidity_indicator">
 						<circle cx="0" cy="0" r="50" fill="#ddd"/>
 						<path id="load" d="" fill="#3b89ff"/>
 						<circle cx="0" cy="0" r="40" fill="#eee"/>
@@ -148,12 +138,12 @@
 	<!-- Input button forms -->
 	<div class="button-container">
 		<form class="form" method="post">
-			<p><input id="button-input1" name="tbutton1" type="text"/></p>
-			<p><input id="tbutton_1" type="button" value="Button1"/></p>
+			<p><input id="button-input1" name="tbutton1" type="text" style ="display:block"/></p>
+			<p><input id="tbutton_1" type="button" value="Set temperature button state"/></p>
 		</form>
 		<form class="form" method="post">
 			<p><input id="button-input2" name="tbutton2" type="text"/></p>
-			<p><input id="tbutton_2" type="button" value="Button2"/></p>
+			<p><input id="tbutton_2" type="button" value="Set pulse button state"/></p>
 		</form>
 	</div>
 
