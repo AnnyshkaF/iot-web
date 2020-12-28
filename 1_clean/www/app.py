@@ -7,7 +7,7 @@ from flask import url_for
 from random import uniform
 import json
 from config import CFG
-from alc_config import ALC_CFG
+#from alc_config import ALC_CFG
 import paho.mqtt.publish as publish
 
 app = Flask(__name__, static_folder='static')
